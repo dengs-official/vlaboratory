@@ -1,0 +1,153 @@
+/*
+ * 注册ant-design-vue组件
+ * 按需引入，自行在此处添加
+ */
+
+import Vue from 'vue';
+import {
+  // Affix,
+  // Anchor,
+  // AutoComplete,
+  Alert,
+  // Avatar,
+  // BackTop,
+  Badge,
+  Breadcrumb,
+  Button,
+  // Calendar,
+  // Card,
+  Collapse,
+  Carousel,
+  Cascader,
+  Checkbox,
+  Col,
+  DatePicker,
+  Divider,
+  Dropdown,
+  Empty,
+  Form,
+  Icon,
+  Input,
+  InputNumber,
+  Layout,
+  // List,
+  LocaleProvider,
+  message,
+  Menu,
+  Modal,
+  notification,
+  Pagination,
+  // Popconfirm,
+  Popover,
+  Progress,
+  Radio,
+  // Rate,
+  Row,
+  Select,
+  // Slider,
+  Spin,
+  Steps,
+  Switch,
+  Table,
+  // Transfer,
+  // Tree,
+  // TreeSelect,
+  Tabs,
+  Tag,
+  // TimePicker,
+  // Timeline,
+  Tooltip,
+  // Mention,
+  Upload,
+  // version,
+  Drawer,
+  // Skeleton,
+  // Comment,
+  ConfigProvider,
+  // Base,
+} from 'ant-design-vue';
+
+const components = [
+  // Affix,
+  // Anchor,
+  // AutoComplete,
+  Alert,
+  // Avatar,
+  // BackTop,
+  Badge,
+  Breadcrumb,
+  Button,
+  // Calendar,
+  // Card,
+  Collapse,
+  Carousel,
+  Cascader,
+  Checkbox,
+  Col,
+  DatePicker,
+  Divider,
+  Dropdown,
+  Empty,
+  Form,
+  Icon,
+  Input,
+  InputNumber,
+  Layout,
+  // List,
+  LocaleProvider,
+  message,
+  Menu,
+  Modal,
+  notification,
+  Pagination,
+  // Popconfirm,
+  Popover,
+  Progress,
+  Radio,
+  // Rate,
+  Row,
+  Select,
+  // Slider,
+  Spin,
+  Steps,
+  Switch,
+  Table,
+  // Transfer,
+  // Tree,
+  // TreeSelect,
+  Tabs,
+  Tag,
+  // TimePicker,
+  // Timeline,
+  Tooltip,
+  // Mention,
+  Upload,
+  // version,
+  Drawer,
+  // Skeleton,
+  // Comment,
+  ConfigProvider,
+  // Base,
+];
+
+components.forEach((item) => {
+  Vue.use(item);
+});
+
+Vue.prototype.$message = message;
+Vue.prototype.$notification = notification;
+// 禁用modal方法，方便统一样式
+Vue.prototype.$modal = Modal;
+
+// 全局配置
+// message
+// message.config({
+//   top: '88px',
+//   duration: 2.5,
+// });
+
+// // notification
+// notification.config({
+//   top: '88px',
+//   duration: 2.5,
+// });
