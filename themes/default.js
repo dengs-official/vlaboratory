@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   // // Color Palette
   // @black: #000;
   // @white: #fff;
