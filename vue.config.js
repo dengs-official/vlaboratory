@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const themes = require('./themes/index.js');
 
 const r = (dir) => path.resolve(__dirname, dir);
 
@@ -28,6 +29,7 @@ module.exports = {
         paths: [r('./src/styles')],
         // 覆盖antd默认样式
         modifyVars: {
+          ...themes()
           // 'border-radius-base': '0',
         },
         globalVars: {

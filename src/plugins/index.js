@@ -1,1 +1,1 @@
-import './antDesignVue.js';
+import './vant.js';
