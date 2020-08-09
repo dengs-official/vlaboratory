@@ -1,14 +1,18 @@
 <template>
-  <van-tabbar v-model="tabs.active">
-    <van-tabbar-item
-      v-for="item in tabs.options"
-      :key="item.name"
-      :name="item.name"
-      :icon="item.icon"
-    >
-      {{item.label}}
-    </van-tabbar-item>
-  </van-tabbar>
+  <div class="layout flex flex-vertical rel">
+    <router-view></router-view>
+    <van-tabbar v-model="tabs.active">
+      <van-tabbar-item
+        v-for="item in tabs.options"
+        :key="item.name"
+        :name="item.name"
+        :icon="item.icon"
+      >
+        {{item.label}}
+      </van-tabbar-item>
+    </van-tabbar>
+  </div>
+
 </template>
 
 <script>
@@ -44,4 +48,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.layout {
+  min-height: 100vh;
+}
 </style>
