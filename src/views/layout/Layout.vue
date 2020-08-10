@@ -6,7 +6,6 @@
     >
       <template #right>
         <van-icon
-          size="18"
           :name="nav.attrs.rightIcon"
           @click="nav.listeners.clickRight"
         />
