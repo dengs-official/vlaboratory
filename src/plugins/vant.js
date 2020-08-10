@@ -6,12 +6,16 @@
 import Vue from 'vue';
 import {
   // Button,
+  Icon,
+  NavBar,
   Tabbar,
   TabbarItem
 } from 'vant';
 
 const components = [
   // Button,
+  Icon,
+  NavBar,
   Tabbar,
   TabbarItem
 ];

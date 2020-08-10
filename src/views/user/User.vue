@@ -1,12 +1,12 @@
 <template>
-  <div class="about-wrapper">
-    about
+  <div class="user-wrapper">
+    User
   </div>
 </template>
 
 <script>
 export default {
-  name: 'about'
+  name: 'user'
 };
 </script>
 
