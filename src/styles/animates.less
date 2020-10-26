@@ -1,0 +1,175 @@
+@import (reference) './variables.less';
+
+// transition
+.transition {
+  transition: all @duration-faster;
+}
+
+// animation
+// 用于生成@keyframes及相应类名
+.gen-ani(@name, @kf, @rules: {}) {
+  @keyframes @name {
+    @kf();
+  }
+
+  .@{name} {
+    animation: @name @duration-normal-speed both;
+    @rules();
+  }
+}
+
+.gen-ani(spin, {
+  100% {
+    transform: rotate(360deg);
+  }
+});
+.gen-ani(fade-in, {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+});
+.gen-ani(zoom-in, {
+  0% {
+    opacity: 0;
+    transform: scale3d(.3, .3, .3);
+  }
+  50% {
+    opacity: 1;
+  }
+});
+.gen-ani(slide-up, {
+  0% {
+    transform: translate3d(0, 100%, 0);
+    visibility: visible;
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+});
+.gen-ani(slide-down, {
+  0% {
+    transform: translate3d(0, -100%, 0);
+    visibility: visible;
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+});
+.gen-ani(flash, {
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+  25%, 75% {
+    opacity: 0;
+  }
+});
+.gen-ani(pulse, {
+  0% {
+    transform: scale3d(1, 1, 1);;
+  }
+  50% {
+    transform: scale3d(1.05, 1.05, 1.05);;
+  }
+  100% {
+    transform: scale3d(1, 1, 1);;
+  }
+});
+.gen-ani(shake, {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: translate3d(-10px, 0, 0);
+  }
+
+  20%, 40%, 60%, 80% {
+    transform: translate3d(10px, 0, 0);
+  }
+});
+.gen-ani(tada, {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+  10%, 20% {
+    transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+  }
+  30%, 50%, 70%, 90% {
+    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+  }
+  40%, 60%, 80% {
+    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+  }
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+});
+.gen-ani(bounce-in, {
+  0%, 20%, 40%, 60%, 80%, 100% {
+    animation-timing-function: cubic-bezier(.215, .61, .355, 1);
+  }
+  0% {
+    opacity: 0;
+    transform: scale3d(.3, .3, .3);
+  }
+  20% {
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+  40% {
+    transform: scale3d(.9, .9, .9);
+  }
+  60% {
+    opacity: 1;
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+  80% {
+    transform: scale3d(.97, .97, .97);
+  }
+  100% {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}, {
+  animation-duration: .75s;
+});
+
+// loop
+.infinite {
+  animation-iteration-count: infinite;
+}
+
+// direction
+@direction: reverse, alternate, alternate-reverse;
+each(@direction, .(@v) {
+  .@{v} {
+    animation-direction: @v;
+  }
+});
+
+// speed
+each(.duration(), .(@v, @k) {
+  @key: replace(@k, '@duration-', '');
+  .@{key} {
+    animation-duration: @v;
+    transition-duration: @v;
+  }
+});
+
+// timing function
+@tf: linear, ease, ease-in, ease-out, ease-in-out;
+each(@tf, .(@v) {
+  .@{v} {
+    animation-timing-function: @v;
+    transition-timing-function: @v;
+  }
+});
+
+// delay
+each(range(@delay-max), .(@v, @k) {
+  .delay-@{k} {
+    animation-delay: @v;
+    transition-delay: @v;
+  }
+});

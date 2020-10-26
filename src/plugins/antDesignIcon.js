@@ -1,1 +1,1 @@
-export {CalendarOutline} from '@ant-design/icons';
+export {CalendarOutline, DownOutline, SmileOutline} from '@ant-design/icons';

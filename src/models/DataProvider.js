@@ -1,9 +1,9 @@
 export class Pagination {
-  static PAGE_NUM = 1
+  static PAGE_START = 1
   static PAGE_SIZE = 20
 
-  constructor({pageNum = Pagination.PAGE_NUM, pageSize = Pagination.PAGE_SIZE, total = 0} = {}) {
-    this.PAGE_NUM = pageNum;
+  constructor({pageNum = Pagination.PAGE_START, pageSize = Pagination.PAGE_SIZE, total = 0} = {}) {
+    this.PAGE_START = pageNum;
     this.PAGE_SIZE = pageSize;
 
     this.setPage({pageNum, pageSize, total});
@@ -21,8 +21,8 @@ export class Pagination {
       if (pageNum > pageCount) {
         pageNum = pageCount;
       }
-      if (pageNum < this.PAGE_NUM) {
-        pageNum = this.PAGE_BEGIN;
+      if (pageNum < this.PAGE_START) {
+        pageNum = this.PAGE_START;
       }
       this.pageNum = pageNum;
     }
@@ -30,14 +30,14 @@ export class Pagination {
 
   reset() {
     this.setPage({
-      pageNum: this.PAGE_NUM,
+      pageNum: this.PAGE_START,
       pageSize: this.PAGE_SIZE,
       total: 0
     });
   }
 
   hasPrev() {
-    return this.pageNum > this.PAGE_NUM;
+    return this.pageNum > this.PAGE_START;
   }
 
   hasNext() {
@@ -51,7 +51,7 @@ export class Pagination {
 
 export default class DataProvider {
   constructor(config) {
-    this.isFetchMore = false;
+    this.isMore = true;
     this.loading = false;
     this.pagination = new Pagination(config.pagination);
     this.items = [];
@@ -67,6 +67,7 @@ export default class DataProvider {
   }
 
   _getData() {
+    console.log(this.params);
     this.loading = true;
     const p = this.request.api(this.params);
     p.then((res) => {
@@ -74,12 +75,12 @@ export default class DataProvider {
       const items = data.list || data.items || data.records || [];
       const total = Number(data.totalCount || data.total || items.length || 0);
 
-      this.items = this.isFetchMore ? [...this.items, ...items] : items;
+      this.items = this.isMore ? [...this.items, ...items] : items;
       this.pagination.setPage({total});
 
       this.request.success && this.request.success(res);
     }).catch((err) => {
-      if (!this.isFetchMore) {
+      if (!this.isMore) {
         this.items = [];
         this.pagination.reset();
       }
@@ -93,53 +94,19 @@ export default class DataProvider {
     return p;
   }
 
-  setParams(params, override = false, reload = true) {
-    if (override) {
-      this.params = params;
-    } else {
-      this.params = {
-        ...this.params,
-        ...params
-      };
-    }
-    if (reload) {
-      return this.reload();
-    }
-    return Promise.resolve({});
-  }
-
-  // 刷新数据并跳转到第一页
-  reload() {
-    return this.changePage(this.pagination.PAGE_BEGIN);
-  }
-
-  // 仅刷新当页数据
-  refresh() {
-    return this.changePage();
-  }
-
-  fetchMore() {
-    if (this.hasMore()) {
-      this.isFetchMore = true;
-      return this.changePage(this.pagination.current + 1).finally(() => {
-        this.isFetchMore = false;
-      });
-    }
-    return Promise.reject(new Error('no more data'));
-  }
-
-  changePage(current = this.pagination.current, pageSize = this.pagination.pageSize) {
-    this.pagination.setPage({current, pageSize});
-
-    this.setParams({
-      pageNum: this.pagination.current,
-      pageSize: this.pagination.pageSize
-    }, false, false);
-
+  fetch(params) {
+    this.params = {...this.params, ...params};
+    this.isMore = false;
+    this.pagination.setPage({pageNum: this.pagination.PAGE_START});
     return this._getData();
   }
 
-  hasMore() {
-    return this.pagination.hasNext();
+  fetchMore() {
+    if (this.pagination.hasNext()) {
+      this.isMore = true;
+      this.pagination.setPage({pageNum: this.pagination.pageNum + 1});
+      return this._getData();
+    }
+    return Promise.reject(new Error('no more data'));
   }
 }

@@ -1,0 +1,90 @@
+// 文本后省略符
+.ellipsis(@line: 1) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  & when (@line = 1) {
+    white-space: nowrap;
+  }
+  & when not (@line = 1) {
+    /* stylelint-disable */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: @line;
+    /* stylelint-enable */
+  }
+}
+
+// 多行文本内容
+.multi-line(@font-size, @line-height) {
+  & when (ispixel(@line-height)) {
+    @indent: -@line-height / 2;
+    margin-top: @indent;
+    margin-bottom: @indent;
+    line-height: @font-size + @line-height;
+  }
+  & when not (ispixel(@line-height)) {
+    @indent: -@font-size * (@line-height - 1) / 2;
+    margin-top: @indent;
+    margin-bottom: @indent;
+    line-height: @line-height;
+  }
+  word-break: break-all;
+}
+
+
+// 三角
+.triangle(@direction, @color, @len1, @len2: @len1 / 2) { // len1长边, len2短边
+  content: '';
+  width: 0;
+  height: 0;
+  display: block;
+  position: absolute;
+  border: (@len1 / 2) solid transparent;
+
+  & when ((@direction = top) or (@direction = up)) {
+    bottom: 100%;
+    border-top: 0;
+    border-bottom: @len2 solid @color;
+  }
+  & when ((@direction = bottom) or (@direction = down)) {
+    top: 100%;
+    border-bottom: 0;
+    border-top: @len2 solid @color;
+  }
+  & when (@direction = left) {
+    right: 100%;
+    border-left: 0;
+    border-right: @len2 solid @color;
+  }
+  & when (@direction = right) {
+    left: 100%;
+    border-right: 0;
+    border-left: @len2 solid @color;
+  }
+}
+
+// 媒体查询media-query
+// 目前仅针对1366特殊配置
+@screens: {
+  @lg: 1920px + 1;
+  @md: 1366px + 1;
+  @sm: 1280px + 1;
+  @xs: 1024px + 1;
+}
+
+// 也可以直接传入屏幕宽度值
+.mq(@widthorscreen, @rules) {
+  & when (isnumber(@widthorscreen)) {
+    @width: @widthorscreen;
+    @media screen and (max-width: @width) {
+      @rules();
+    }
+  }
+  & when not (isnumber(@widthorscreen)) {
+    @width: @screens[@@widthorscreen];
+    @media screen and (max-width: @width) {
+      @rules();
+    }
+  }
+};

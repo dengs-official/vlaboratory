@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "report": "vue-cli-service build --report"
@@ -12,6 +12,7 @@
     "ant-design-vue": "^1.6.3",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
+    "mockjs": "^1.1.0",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"

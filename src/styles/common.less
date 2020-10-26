@@ -1,0 +1,251 @@
+/*
+ * 常用的工具类
+ */
+@import (reference) './variables.less';
+@import (reference) './mixins.less';
+
+// height
+.h100 {
+  height: 100%;
+}
+.w100 {
+  width: 100%;
+}
+
+// center
+.pos-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+// box-sizing
+@box: border-box, content-box;
+each(@box, .(@v) {
+  .@{v} {
+    box-sizing: @v;
+  }
+});
+
+// display
+@display: none, inline, block, inline-block;
+each(@display, .(@v) {
+  .@{v} {
+    display: @v;
+  }
+});
+
+// position
+each({
+  rel: relative;
+  abs: absolute;
+  fixed: fixed;
+}, .(@v, @k) {
+  .@{k} {
+    position: @v;
+  }
+});
+
+// z-index
+each(.z-index(), .(@v, @k) {
+  @key: replace(@k, '@', '');
+  .@{key} {
+    z-index: @v;
+  }
+});
+
+// overflow
+@ov: auto, hidden, visible;
+each(@ov, .(@v) {
+  .ov-@{v} {
+    overflow: @v;
+  }
+});
+
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.clearfix {
+  &::before, &::after{
+    content: '\200B';
+    display: block;
+    height: 0;
+    clear: both;
+  }
+}
+
+// flex
+.flex {
+  display: flex;
+  align-items: stretch;
+  &-wrap {
+    flex-wrap: wrap;
+  }
+  &-vertical {
+    flex-direction: column;
+  }
+  each({
+    stretch: stretch;
+    start: flex-start;
+    middle: center;
+    end: flex-end;
+  }, .(@v, @k) {
+    &-@{k} {
+      align-items: @v;
+    }
+    &-self-@{k} {
+      align-self: @v;
+    }
+  });
+  each({
+    right: flex-end;
+    center: center;
+    justify: space-between;
+    around: space-around;
+    left: flex-start;
+  }, .(@v, @k) {
+    &-@{k} {
+      justify-content: @v;
+    }
+  });
+  &-item {
+    flex: 0 0 auto;
+    &-auto {
+      flex: auto;
+    }
+    &-1 {
+      flex: 1;
+    }
+    &-2 {
+      flex: 2;
+    }
+  }
+}
+
+// border
+.border {
+  border: 1px solid @color-border;
+}
+.border-0 {
+  border: 0;
+}
+@bd: top, bottom, left, right;
+each(@bd, .(@v) {
+  .bd-@{v} {
+    border-@{v}: 1px solid @color-border;
+    &-0 {
+      border-@{v}: 0;
+    }
+  }
+});
+
+// color
+each(.color(), .(@v, @k) {
+  @key: replace(@k, '@', '');
+  .@{key} {
+    color: @v;
+  }
+});
+
+// background-color
+each(.color(), .(@v, @k) {
+  @key: replace(@k, '@', '');
+  .bg-@{key} {
+    background-color: @v;
+  }
+});
+
+// text
+.ellipsis {
+  .ellipsis();
+}
+each(range(3), .(@v) {
+  .ellipsis-@{v} {
+    .ellipsis(@v);
+  }
+});
+@text: left, center, right, justify;
+each(@text, .(@v) {
+  .text-@{v} {
+    text-align: @v;
+  }
+});
+@va: baseline, sub, super, top, text-top, middle, bottom, text-bottom;
+each(@va, .(@v) {
+  .text-@{v} {
+    vertical-align: @v;
+  }
+});
+.text-hide {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+@ws: pre, nowrap, pre-wrap, pre-line;
+each(@ws, .(@v) {
+  .@{v} {
+    white-space: @v;
+  }
+});
+@wb: keep-all, break-all, break-word;
+each(@wb, .(@v) {
+  .@{v} {
+    word-break: @v;
+    & when (@v = break-word) {
+      word-wrap: @v;
+      overflow-wrap: @v;
+    }
+  }
+});
+
+@cursor: pointer, crosshair, move, text, wait, help;
+each(@cursor, .(@v) {
+  .@{v} {
+    cursor: @v;
+  }
+});
+
+// font
+each(.font-size(), .(@v, @k) {
+  @key: replace(@k, '@', '');
+  .@{key} {
+    font-size: @v;
+  }
+});
+.italic {
+  font-style: italic;
+}
+.bold {
+  font-weight: bold;
+}
+
+// visibility
+.visible {
+  visibility: visible;
+}
+.invisible {
+  visibility: hidden;
+}
+.opacity-1 {
+  opacity: 1;
+}
+.opacity-0 {
+  opacity: 0;
+}
+
+// mask
+.mask {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: @color-mask;
+  z-index: @z-global;
+}
